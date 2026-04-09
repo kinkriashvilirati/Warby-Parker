@@ -13,15 +13,15 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
   margin: 0;
-  background-color: red;
+  padding: 24px;
 }
 
 .main-container {
   display: flex;
-  width: 70%;
-  height: 60%;
+  width: min(1100px, 100%);
+  min-height: 640px;
   border-radius: 15px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
   overflow: hidden;
@@ -33,7 +33,7 @@ body {
   flex: 1;
   background-color: white;
   text-align: center;
-  padding: 30px;
+  padding: 48px 40px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -52,6 +52,7 @@ body {
 
 .inputContainer {
   width: 100%;
+  max-width: 420px;
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -93,16 +94,24 @@ body {
 }
 .additionalContainer {
   width: 100%;
+  max-width: 420px;
   display: flex;
   justify-content: space-between;
   padding: 0 10px;
   align-items: center;
   margin-bottom: 20px;
   color: #00bfff;
+  gap: 12px;
+}
+
+.button-container {
+  width: 100%;
+  max-width: 420px;
 }
 
 .button-container button {
   background: linear-gradient(to right, #00bfff, #1e90ff);
+  width: 100%;
   padding: 12px 40px;
   color: white;
   border: none;
@@ -127,6 +136,7 @@ body {
 .registerContainer {
   margin-top: 15px;
   color: #00bfff;
+  text-align: center;
 }
 
 /* Right side */
@@ -146,6 +156,7 @@ body {
   margin-bottom: 20px;
 }
 
+.leftSideInfo,
 .rightSideContainer p {
   font-size: 1rem;
   line-height: 1.5;
@@ -190,8 +201,8 @@ a:hover {
 }
 .goBackArrow {
   position: absolute;
-  left: 1vw;
-  top: 1vw;
+  left: 20px;
+  top: 20px;
 }
 .goBackArrow i {
   color: #666;
@@ -208,4 +219,111 @@ a:hover {
 }
 .register-off {
   display: none;
+}
+
+@media (max-width: 1024px) {
+  body {
+    padding: 20px;
+  }
+
+  .main-container {
+    min-height: 580px;
+  }
+
+  .leftSideContainer,
+  .rightSideContainer {
+    padding: 36px 28px;
+  }
+
+  .leftSideContainer h1,
+  .rightSideContainer h1 {
+    font-size: 1.8rem;
+  }
+
+  .leftSideInfo,
+  .rightSideContainer p {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  body {
+    align-items: stretch;
+    padding: 16px;
+  }
+
+  .main-container {
+    flex-direction: column;
+    min-height: auto;
+  }
+
+  .leftSideContainer,
+  .rightSideContainer {
+    width: 100%;
+    padding: 32px 24px;
+  }
+
+  .leftSideContainer {
+    justify-content: flex-start;
+    padding-top: 72px;
+  }
+
+  .rightSideContainer {
+    min-height: 220px;
+  }
+
+  .leftSideInfo,
+  .rightSideContainer p {
+    max-width: 520px;
+  }
+}
+
+@media (max-width: 560px) {
+  body {
+    padding: 12px;
+  }
+
+  .main-container {
+    border-radius: 12px;
+  }
+
+  .leftSideContainer,
+  .rightSideContainer {
+    padding: 28px 18px;
+  }
+
+  .leftSideContainer {
+    padding-top: 68px;
+  }
+
+  .leftSideContainer h1,
+  .rightSideContainer h1 {
+    font-size: 1.55rem;
+  }
+
+  .leftSideContainer p,
+  .leftSideInfo,
+  .rightSideContainer p,
+  .remember span,
+  .registerContainer p,
+  .forgetPassword a {
+    font-size: 0.95rem;
+  }
+
+  .inputContainer input,
+  .password-container input,
+  .button-container button {
+    font-size: 0.95rem;
+  }
+
+  .additionalContainer {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0;
+  }
+
+  .goBackArrow {
+    left: 16px;
+    top: 16px;
+  }
 }
