@@ -13,25 +13,53 @@ import { formatCurrency } from "../utils/money.js";
 import { addToCart } from "../../data/cart.js";
 import { addToFavourite } from "../../data/faovurite.js";
 import { getClickedProductId } from "../../htmlComponents/product.js";
+
+function renderMissingProductState() {
+  const singleProductCotainer = document.querySelector(".singleProductCotainer");
+  const relatedProducts = document.querySelector(".relatedProducts");
+
+  if (singleProductCotainer) {
+    singleProductCotainer.innerHTML = `
+      <div class="singleProductDetails-container">
+        <div class="info-container">
+          <div>Product not found.</div>
+          <div>Please go back and choose a product again.</div>
+          <div><a href="warbyparker.html">Back to home</a></div>
+        </div>
+      </div>`;
+  }
+
+  if (relatedProducts) {
+    relatedProducts.innerHTML = ``;
+  }
+}
+
 async function loadSingleProduct() {
   await loadProductsFetch();
-  let productId = JSON.parse(localStorage.getItem("singleProductId"));
-  let product = getProduct(productId);
-  // url start
-  // Check if the URL already has a product ID
   const url = new URL(window.location.href);
   let productUrl = url.searchParams.get("product");
+  let productId = productUrl || JSON.parse(localStorage.getItem("singleProductId"));
 
   if (!productUrl && productId) {
-    // If no product ID is in the URL but we have one from localStorage, redirect
     const productIdUrl = productId;
-    window.location.href = `singleproduct.html?product=${productIdUrl}`;
-  } else {
-    console.log(`Current product in URL: ${productUrl}`);
-    productId = productUrl;
-    product = getProduct(productUrl);
+    window.location.replace(
+      `singleproduct.html?product=${encodeURIComponent(productIdUrl)}`
+    );
+    return;
   }
-  // url end
+
+  if (!productId) {
+    renderMissingProductState();
+    return;
+  }
+
+  let product = getProduct(productId);
+
+  if (!product) {
+    renderMissingProductState();
+    return;
+  }
+
   const singleProductCotainer = document.querySelector(
     ".singleProductCotainer"
   );

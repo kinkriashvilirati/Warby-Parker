@@ -1,7 +1,10 @@
 import { addToFavourite } from "../../data/faovurite.js";
 import { loadGlassesProducts } from "./glassesShopLoad.js";
 import { loadProductsFetch, products } from "../../data/products.js";
-import { getClickedProductId } from "../../htmlComponents/product.js";
+import {
+  getClickedProductId,
+  getSingleProductUrl,
+} from "../../htmlComponents/product.js";
 import { loadBestSelling } from "./loadBestProduct.js";
 
 function changeDotToImage() {
@@ -39,7 +42,9 @@ export async function loadAccessories() {
     if (product.bestSelling == true && product.type == "accessories") {
       bestSellingHtml += ` 
         <div class="product-image-container image-off" data-product-id="${product.id}">
-          <a class="singleProduct-link-js bestSellingProducts" data-productId="${product.id}" href="../../singleproduct.html">
+          <a class="singleProduct-link-js bestSellingProducts" data-productId="${
+            product.id
+          }" href="${getSingleProductUrl(product.id)}">
             <img
               src="${product.image}"
               alt=""
@@ -56,18 +61,28 @@ export async function loadAccessories() {
     }
   }
 
-  shopBestSelling.addEventListener("click", () => {
-    document
-      .querySelectorAll(".product-image-container")
-      .forEach((productLink) => {
-        if (productLink.classList.contains("image-on")) {
-          let productId = productLink.getAttribute("data-product-id");
-          getClickedProductId(productId);
-        }
-      });
-  });
+  function updateShopNowLink() {
+    const activeProduct = document.querySelector(
+      ".product-image-container.image-on"
+    );
+
+    if (!activeProduct || !shopBestSelling) {
+      return;
+    }
+
+    const productId = activeProduct.getAttribute("data-product-id");
+    shopBestSelling.href = getSingleProductUrl(productId);
+    getClickedProductId(productId);
+  }
 
   getClickedProductId();
   changeDotToImage();
+  updateShopNowLink();
+
+  document.querySelectorAll(".image-dot-js").forEach((dot) => {
+    dot.addEventListener("click", () => {
+      updateShopNowLink();
+    });
+  });
 }
 loadAccessories();

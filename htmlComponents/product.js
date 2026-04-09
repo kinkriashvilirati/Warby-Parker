@@ -1,4 +1,9 @@
 import formatCurrency from "../scripts/utils/money.js";
+
+export function getSingleProductUrl(productId) {
+  return `singleproduct.html?product=${encodeURIComponent(productId)}`;
+}
+
 export function getClickedProductId(shopNowId) {
   const links = document.querySelectorAll(".singleProduct-link-js");
 
@@ -32,7 +37,7 @@ export function productHtml(product, color, size) {
         <div class="product-image">
           <a class="singleProduct-link-js"  data-productId="${
             product.id
-          }"  href="../singleproduct.html">
+          }"  href="${getSingleProductUrl(product.id)}">
             <img src="${product.image}" alt="" />
           </a>
         </div>

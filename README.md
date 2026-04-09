@@ -50,6 +50,6 @@ Note: the project uses `fetch()` to load JSON data and shared HTML components, s
 
 ## Screenshots
 
-- Homepage screenshot placeholder
-- Product listing / filters screenshot placeholder
-- Cart / checkout screenshot placeholder
+![Home Page](image.png)
+![detailed product](image-1.png)
+![Cart](image-2.png)
