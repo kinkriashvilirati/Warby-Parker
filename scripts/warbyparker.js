@@ -3,7 +3,11 @@ import { loadHeader } from "./loadPage/loadheader.js";
 import { addToFavourite } from "../data/faovurite.js";
 import { loadFooter } from "./loadPage/loadfooter.js";
 import { addToCart } from "../data/cart.js";
-import { productHtml, getClickedProductId } from "../htmlComponents/product.js";
+import {
+  productHtml,
+  getClickedProductId,
+  getSingleProductUrl,
+} from "../htmlComponents/product.js";
 
 function renderProductsWarbyparker() {
   const productsContainer = document.querySelector(".products");
@@ -30,7 +34,21 @@ function renderProductsWarbyparker() {
   addToCart();
 }
 
+function normalizeHomepageSingleProductLinks() {
+  document
+    .querySelectorAll('a[href^="singleproduct.html?product="]')
+    .forEach((link) => {
+      const href = link.getAttribute("href");
+      const productId = href.split("product=")[1];
+
+      if (productId) {
+        link.href = getSingleProductUrl(decodeURIComponent(productId));
+      }
+    });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
+  normalizeHomepageSingleProductLinks();
   loadHeader();
   loadFooter();
   loadProductsFetch(renderProductsWarbyparker);

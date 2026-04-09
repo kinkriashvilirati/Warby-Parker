@@ -12,11 +12,15 @@ import {
 import { formatCurrency } from "../utils/money.js";
 import { addToCart } from "../../data/cart.js";
 import { addToFavourite } from "../../data/faovurite.js";
-import { getClickedProductId } from "../../htmlComponents/product.js";
+import {
+  getClickedProductId,
+  getSingleProductUrl,
+} from "../../htmlComponents/product.js";
 
 function renderMissingProductState() {
   const singleProductCotainer = document.querySelector(".singleProductCotainer");
   const relatedProducts = document.querySelector(".relatedProducts");
+  const homeUrl = new URL("../../warbyparker.html", import.meta.url).href;
 
   if (singleProductCotainer) {
     singleProductCotainer.innerHTML = `
@@ -24,7 +28,7 @@ function renderMissingProductState() {
         <div class="info-container">
           <div>Product not found.</div>
           <div>Please go back and choose a product again.</div>
-          <div><a href="warbyparker.html">Back to home</a></div>
+          <div><a href="${homeUrl}">Back to home</a></div>
         </div>
       </div>`;
   }
@@ -41,10 +45,7 @@ async function loadSingleProduct() {
   let productId = productUrl || JSON.parse(localStorage.getItem("singleProductId"));
 
   if (!productUrl && productId) {
-    const productIdUrl = productId;
-    window.location.replace(
-      `singleproduct.html?product=${encodeURIComponent(productIdUrl)}`
-    );
+    window.location.replace(getSingleProductUrl(productId));
     return;
   }
 

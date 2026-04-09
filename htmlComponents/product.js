@@ -1,7 +1,9 @@
 import formatCurrency from "../scripts/utils/money.js";
 
 export function getSingleProductUrl(productId) {
-  return `singleproduct.html?product=${encodeURIComponent(productId)}`;
+  const singleProductUrl = new URL("../singleproduct.html", import.meta.url);
+  singleProductUrl.searchParams.set("product", productId);
+  return singleProductUrl.href;
 }
 
 export function getClickedProductId(shopNowId) {
@@ -11,9 +13,15 @@ export function getClickedProductId(shopNowId) {
     saveSingleProductId(shopNowId);
   } else {
     links.forEach((link) => {
+      const productId = link.getAttribute("data-productId");
+      if (productId) {
+        link.href = getSingleProductUrl(productId);
+      }
+
       link.addEventListener("click", () => {
-        const productId = link.getAttribute("data-productId");
-        saveSingleProductId(productId);
+        const clickedProductId = link.getAttribute("data-productId");
+        saveSingleProductId(clickedProductId);
+        link.href = getSingleProductUrl(clickedProductId);
       });
     });
   }
