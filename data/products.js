@@ -63,10 +63,14 @@ export let products = JSON.parse(localStorage.getItem("glassesproducts")) || [];
 
 export async function loadProductsFetch(fun) {
   try {
-    let promise;
-    let data;
-    promise = await fetch("../API/products.json");
-    data = await promise.json();
+    const response = await fetch(
+      new URL("../API/products.json", import.meta.url).href
+    );
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+
+    const data = await response.json();
     products = data.map((productDetails) => {
       return new Product(productDetails);
     });

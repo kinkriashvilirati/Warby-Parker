@@ -19,13 +19,20 @@ function favouriteQuantityCounter() {
 }
 
 export async function loadHeader() {
+  const headerPlaceholder = document.getElementById("header-placeholder");
+  if (!headerPlaceholder) {
+    return;
+  }
+
   try {
-    const response = await fetch("../../htmlComponents/header.html");
+    const response = await fetch(
+      new URL("../../htmlComponents/header.html", import.meta.url).href
+    );
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }
     const headerHtml = await response.text();
-    document.getElementById("header-placeholder").innerHTML = headerHtml;
+    headerPlaceholder.innerHTML = headerHtml;
     cartQuantityCounter();
     favouriteQuantityCounter();
     headerStyle();
