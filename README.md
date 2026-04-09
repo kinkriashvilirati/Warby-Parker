@@ -48,6 +48,10 @@ Note: the project uses `fetch()` to load JSON data and shared HTML components, s
 
 [GitHub Pages Demo](https://kinkriashvilirati.github.io/Warby-Parker/warbyparker.html)
 
+## Demo Video
+
+[Watch the demo](https://www.youtube.com/watch?v=52384VLMtRo)
+
 ## Screenshots
 
 ![Home Page](image.png)
